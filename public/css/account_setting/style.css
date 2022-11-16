@@ -1,0 +1,62 @@
+.tab-pane.active{
+    background-color: transparent !important;
+}
+
+.title {
+    margin-top:3rem !important;
+    margin-bottom:1.5rem !important;
+}
+.header-nav{
+    display:inline-flex; 
+    margin-bottom:2rem !important;
+    height: 6rem !important;
+}
+
+.nav-tabs {
+    border-bottom: 3px solid rgba(0, 0, 0, 0.4);
+    width:81vw;
+    height: 4rem !important;
+}
+
+.nav-tabs li, .nav-tabs .active a{
+    color:#5ABA4E !important;
+    background-color: transparent !important;
+    background: none !important;
+}
+
+.nav-tabs a {
+    font-family: 'Open Sans' !important;
+    font-size: 16px;
+    color: rgba(0, 0, 0, 0.4);
+}
+
+.nav-tabs a.active {
+    font-family: 'Open Sans' !important;
+    color:#5ABA4E !important;
+    font-size: 16px;
+    color: black !important;
+}
+
+.nav-tabs .nav-item.active {
+    color:#5ABA4E !important;
+}
+
+.nav-tabs .nav-item {
+    height: 3rem !important;
+    width: 20vw;
+}
+
+.yajra-datatable {
+    width: 100% !important;
+}
+
+.btn-logout {
+    font-family: 'Open Sans' !important;
+    font-style: normal !important;
+    font-weight: 700 !important;
+    font-size: 14px !important;
+    text-transform: none !important;
+    margin-top: 2rem !important;
+    border-radius: 10px !important;
+    height: 3rem !important;
+}
