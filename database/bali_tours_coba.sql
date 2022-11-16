@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 16 Nov 2022 pada 05.04
+-- Waktu pembuatan: 17 Nov 2022 pada 00.00
 -- Versi server: 10.4.22-MariaDB
 -- Versi PHP: 7.4.27
 
@@ -44,7 +44,7 @@ CREATE TABLE `cars` (
 --
 
 INSERT INTO `cars` (`id`, `name`, `description`, `image`, `max_person`, `price`, `hours`, `created_at`, `updated_at`) VALUES
-(2, 'Alphard', 'Panorama Gunung Batur pada sore hari sungguh mempesona amazing super tidak terkalahkan luar biasa', 'mobil/TQDUyFkhWG1oqMo0DyBuNApVBuEVxaF6A9XoVyDc.jpg', 8, 1000000, 6, '2022-09-10 04:06:07', '2022-10-05 21:34:58'),
+(2, 'Alphard', 'Including :Driver , Petrol , Mineral Water\r\nExclude : Parking ticket,TOL Ticket,Driver tip\r\nExtra hour : 10%/hour', 'mobil/TQDUyFkhWG1oqMo0DyBuNApVBuEVxaF6A9XoVyDc.jpg', 8, 1000000, 6, '2022-09-10 04:06:07', '2022-11-16 10:58:39'),
 (3, 'Avanza', 'Mobil Sejuta Umat', 'mobil/pW44qY12SmGsEQPOtpRg74PS1dCN2mZOLQhmMzgw.jpg', 6, 100000, 5, '2022-09-22 22:51:52', '2022-09-22 22:51:52'),
 (4, 'Avanza Beda', 'Mobil Pasaran', 'mobil/eY9rQ6af1rYEzxP36KR2IJeeooP8sZ9aUJ6zBy8t.png', 4, 200000, 6, '2022-09-22 22:52:21', '2022-09-22 22:52:21'),
 (5, 'BMW', 'dadadfafda', 'mobil/zYG5CysALN8H0Voq9Fqvp0H0uTqaIOHIUVRTOccS.png', 4, 10000000, 10, '2022-10-05 21:43:52', '2022-10-05 21:43:52'),
@@ -56,7 +56,8 @@ INSERT INTO `cars` (`id`, `name`, `description`, `image`, `max_person`, `price`,
 (11, 'Jaguar', 'cfdafafafafa', 'mobil/eenOgWqvJDlE8jDo0ptsGEhApsJWQfpbbCmJ8bAy.jpg', 6, 1000000, 4, '2022-10-05 21:46:40', '2022-10-05 21:46:40'),
 (12, 'Tesla', 'Mobil Listrik', 'mobil/sK5cJ8ZWgn31LIpH3zSddcYc0VRzJpgJPtmbxNdn.jpg', 4, 100000000, 10, '2022-10-05 21:47:25', '2022-10-05 21:47:25'),
 (13, 'Ferrari', 'Mobil mahal', 'mobil/dEq9VMpxUDzPemyCpMSwKkGdfgP8ZtBfMbNnlDe5.jpg', 4, 1000000, 6, '2022-10-23 04:44:19', '2022-10-23 04:44:19'),
-(14, 'Jaguar 2', 'dadad', 'mobil/S4aTFb6M7O6bvMI5FdiCwT6aElZfTQJQDXazYzhm.png', 4, 1000000, 6, '2022-10-28 23:09:33', '2022-10-28 23:10:41');
+(14, 'Jaguar 2', 'dadad', 'mobil/S4aTFb6M7O6bvMI5FdiCwT6aElZfTQJQDXazYzhm.png', 4, 1000000, 6, '2022-10-28 23:09:33', '2022-10-28 23:10:41'),
+(15, 'Coba', 'Including :Driver , Petrol , Mineral Water\nExclude : Parking ticket,TOL Ticket,Driver tip\nExtra hour : 10%/hour', 'mobil/4Xm9LhKOn2I1kHLrDD3MmtfbdwezKuE6sRpTs80d.jpg', 4, 1000000, 8, '2022-11-16 10:36:26', '2022-11-16 10:36:26');
 
 -- --------------------------------------------------------
 
@@ -297,7 +298,8 @@ INSERT INTO `dest_packs` (`id`, `destination_id`, `package_id`, `day_id`, `creat
 (327, 3, 96, 2, '2022-11-13 07:15:28', '2022-11-13 07:15:28'),
 (332, 4, 97, 1, '2022-11-13 07:22:50', '2022-11-13 07:22:50'),
 (333, 5, 97, 2, '2022-11-13 07:22:50', '2022-11-13 07:22:50'),
-(334, 8, 97, 3, '2022-11-13 07:22:50', '2022-11-13 07:22:50');
+(334, 8, 97, 3, '2022-11-13 07:22:50', '2022-11-13 07:22:50'),
+(335, 5, 98, 0, '2022-11-16 13:31:59', '2022-11-16 13:31:59');
 
 -- --------------------------------------------------------
 
@@ -7810,6 +7812,7 @@ CREATE TABLE `packages` (
   `special_price` int(255) DEFAULT NULL,
   `description` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `keterangan` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `image` varchar(2000) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL,
   `days` int(11) NOT NULL DEFAULT 1
@@ -7819,40 +7822,41 @@ CREATE TABLE `packages` (
 -- Dumping data untuk tabel `packages`
 --
 
-INSERT INTO `packages` (`id`, `name`, `type`, `id_ticket`, `schedule_date`, `schedule`, `price`, `special_price`, `description`, `keterangan`, `created_at`, `updated_at`, `days`) VALUES
-(7, 'Keliling Bali', 'half', NULL, '2022-09-23', '07.00-18.00', 2000000, NULL, 'It is one of Bali’s nine directional temples and is of great significance to the Balinese culture and religion. Here you will see the famous Gate of Heaven overlook to Agung volcano the biggest volcano in Bali.', 'Please bring extra cloths and towel if want swim in beach. Women during menstruation are not allowed to entering temple. For Payment we receive cash during day trip', '2022-09-05 04:33:34', '2022-09-22 22:29:17', 1),
-(10, 'Tanah Lot', 'half', NULL, '2022-09-23', '13.00-18.00', 1000000, NULL, 'To many people, Tanah Lot epitomizes the romantic island of Bali. Tanah Lot means Land in The Sea, a perfectly fit name for its unique offshore settings. The silhouette of Pura Tanah Lot is one of the most popular iconic features of Bali.', NULL, '2022-09-05 05:30:35', '2022-09-22 20:42:23', 1),
-(11, 'Uluwatu', 'full', NULL, '2022-09-23', '10.00-13.00', 100000, NULL, 'Uluwatu Temple locally known as Pura Luhur Uluwatu (with Luhur meaning “something of divine origin”). This is one of Bali\'s nine key directional temples and one of the most spectacular ones in the entire island.', NULL, '2022-09-05 05:33:23', '2022-09-22 20:40:24', 1),
-(12, 'Happy', 'full', NULL, '2022-09-06', '11.00-19.00', 1000000, NULL, 'dnlkandla', NULL, '2022-09-06 04:31:32', '2022-09-06 04:34:24', 1),
-(13, 'Kelilinng Bali 2', 'full', 3, '2022-09-07', '13.00-18.00', 2000000, NULL, 'Keliling Bali selama 5 hari', NULL, '2022-09-07 04:44:38', '2022-09-07 04:44:38', 1),
-(15, 'Ga Ngotak', 'full', 2, '2022-09-21', '13.00-18.00', 13000000, NULL, NULL, NULL, '2022-09-16 09:02:05', '2022-09-21 05:44:48', 1),
-(51, 'jllloini', 'tour', NULL, '2022-09-21', 'bkjkb', 10000000, NULL, 'kjbkb', 'bjbjb', '2022-09-21 03:40:04', '2022-09-21 03:40:04', 1),
-(52, 'Ga Ngotak', 'tour', 1, '2022-09-21', '07.00-12.00', 10000000, NULL, 'vsfsf', 'gsgsggs', '2022-09-21 04:03:34', '2022-09-21 05:42:20', 1),
-(56, 'nlkcnafca', 'tour', NULL, '2022-09-21', 'lnkadc', 100000000, NULL, 'dada,ld', 'dmamdad', '2022-09-21 04:31:50', '2022-09-21 04:31:50', 1),
-(58, 'Jalan-jalan', 'tour', NULL, '2022-09-25', 'nlknlk', 100000000, NULL, 'cafafa', 'fafafafffa', '2022-09-25 06:01:42', '2022-09-25 06:01:42', 1),
-(62, 'Coba4', 'tour', NULL, '2022-10-17', '17.00-20.00', 1000000, NULL, NULL, NULL, '2022-10-04 18:08:47', '2022-10-17 12:36:17', 1),
-(67, 'coba6', 'tour', 1, '2022-10-05', 'dandnand', 10000000, NULL, 'dan,dnand', 'damldkad', '2022-10-05 05:01:54', '2022-10-05 05:01:54', 1),
-(68, 'Keliling Sampai Tepar', 'full', NULL, '2022-10-06', '18.00', 10000000, NULL, 'Keliling Bali sampai Tepar', 'Harus kaya', '2022-10-06 00:22:47', '2022-10-06 00:22:47', 1),
-(69, 'Pantai Pendawa', 'full', NULL, '2022-10-06', 'dqdad', 1000000, NULL, 'adadadad', 'dadadada', '2022-10-06 00:31:06', '2022-10-06 00:31:06', 1),
-(70, 'Pantai Kuta', 'full', 1, '2022-10-06', 'dqdqd', 1000000, NULL, 'dadada', 'adadada', '2022-10-06 00:31:34', '2022-10-06 00:31:34', 1),
-(71, 'Nusa Penida', 'full', 1, '2022-10-06', 'fffqfq', 3000000, NULL, 'ddqdq', 'dadadad', '2022-10-06 00:32:08', '2022-10-06 00:32:08', 1),
-(72, 'coba7', 'tour', NULL, '2022-10-07', 'dadadada', 1000000, NULL, 'dadadad', 'adadadqdq', '2022-10-06 18:42:21', '2022-10-06 18:42:21', 1),
-(74, 'coba', 'tour', NULL, '2022-10-17', '11.00-19.00', 1000000000, NULL, NULL, NULL, '2022-10-17 12:32:42', '2022-10-17 12:32:42', 1),
-(75, 'Keliling Bali 3', 'full', 1, '2022-10-23', '18.00-22.00', 10000000, NULL, 'daj,nda', 'jdlajdal', '2022-10-23 04:33:39', '2022-10-23 04:33:39', 1),
-(76, 'Keliling Bali 4', 'tour', NULL, '2022-10-23', 'Senin  - Rabu', 3000000, NULL, 'dnankda,d', 'dakndaknd', '2022-10-23 04:36:46', '2022-10-23 04:36:46', 1),
-(77, 'Bali Jegeg', 'full', NULL, '2022-11-13', '17.00-20.00', 2000000, 1000000, 'dadada', 'adadaadad', '2022-10-28 21:36:44', '2022-11-13 06:45:06', 1),
-(78, 'Bali Moi', 'optional', NULL, '2022-10-29', 'dadada', 100000, NULL, 'dadad', 'dadadad', '2022-10-28 21:39:46', '2022-10-28 21:39:46', 1),
-(87, 'Bali Indah', 'tour', NULL, '2022-10-29', 'ffsfsf', 1000000, NULL, 'fsfffsfs', 'adadafaff', '2022-10-28 22:03:48', '2022-10-28 22:03:48', 1),
-(88, 'Bali', 'tour', NULL, '2022-10-29', 'qeqeq', 1000000, NULL, NULL, NULL, '2022-10-28 22:12:42', '2022-10-28 22:43:28', 1),
-(89, 'Bali Bersatu', 'tour', NULL, '2022-11-16', 'dadad', 200000, 80000, 'sefsfsf', NULL, '2022-10-28 22:17:45', '2022-11-15 19:52:09', 1),
-(90, 'Bali Aneh', 'tour', NULL, '2022-10-29', 'cacal c a', 10000000, NULL, NULL, NULL, '2022-10-28 22:59:00', '2022-10-28 23:01:14', 1),
-(91, 'Keliling Bali 5', 'optional', 1, '2022-10-30', '17.00-22.00', 1000000, NULL, 'fsfsfsfs', 'fafafafaf', '2022-10-30 04:24:13', '2022-10-30 04:24:13', 1),
-(92, 'Keliling Bali 6', 'optional', 2, '2022-10-30', 'dadada', 1000000, 800000, NULL, NULL, '2022-10-30 04:28:31', '2022-10-30 04:36:27', 1),
-(93, 'Keliling Bali 7', 'optional', 2, '2022-10-30', 'adafaf', 1000000, 700000, 'fafafaf', 'afaffafaf', '2022-10-30 04:30:45', '2022-10-30 04:30:45', 1),
-(94, 'Eka Surya', 'tour', NULL, '2022-11-13', 'da;dlamd', 900000, NULL, 'fafafa', 'fafafafa', '2022-11-13 07:06:31', '2022-11-13 07:06:31', 1),
-(95, 'Eka Ganteng', 'tour', NULL, '2022-11-13', 'fafafa', 8000000, NULL, 'bjkbjkb', NULL, '2022-11-13 07:08:46', '2022-11-13 07:08:46', 1),
-(96, 'Steven Kusuma', 'tour', 3, '2022-11-13', 'huiiu', 900000, 100000, 'byuggby', 'buybuyb', '2022-11-13 07:15:28', '2022-11-13 07:15:28', 1),
-(97, 'Coba-coba', 'tour', NULL, '2022-11-13', 'calca c', 100000, 800000, 'ca kcacakc', 'cankcnakc', '2022-11-13 07:21:19', '2022-11-13 07:21:19', 1);
+INSERT INTO `packages` (`id`, `name`, `type`, `id_ticket`, `schedule_date`, `schedule`, `price`, `special_price`, `description`, `keterangan`, `image`, `created_at`, `updated_at`, `days`) VALUES
+(7, 'Keliling Bali', 'half', NULL, '2022-09-23', '07.00-18.00', 2000000, NULL, 'It is one of Bali’s nine directional temples and is of great significance to the Balinese culture and religion. Here you will see the famous Gate of Heaven overlook to Agung volcano the biggest volcano in Bali.', 'Please bring extra cloths and towel if want swim in beach. Women during menstruation are not allowed to entering temple. For Payment we receive cash during day trip', NULL, '2022-09-05 04:33:34', '2022-09-22 22:29:17', 1),
+(10, 'Tanah Lot', 'half', NULL, '2022-09-23', '13.00-18.00', 1000000, NULL, 'To many people, Tanah Lot epitomizes the romantic island of Bali. Tanah Lot means Land in The Sea, a perfectly fit name for its unique offshore settings. The silhouette of Pura Tanah Lot is one of the most popular iconic features of Bali.', NULL, NULL, '2022-09-05 05:30:35', '2022-09-22 20:42:23', 1),
+(11, 'Uluwatu', 'full', NULL, '2022-09-23', '10.00-13.00', 100000, NULL, 'Uluwatu Temple locally known as Pura Luhur Uluwatu (with Luhur meaning “something of divine origin”). This is one of Bali\'s nine key directional temples and one of the most spectacular ones in the entire island.', NULL, NULL, '2022-09-05 05:33:23', '2022-09-22 20:40:24', 1),
+(12, 'Happy', 'full', NULL, '2022-09-06', '11.00-19.00', 1000000, NULL, 'dnlkandla', NULL, NULL, '2022-09-06 04:31:32', '2022-09-06 04:34:24', 1),
+(13, 'Kelilinng Bali 2', 'full', 3, '2022-09-07', '13.00-18.00', 2000000, NULL, 'Keliling Bali selama 5 hari', NULL, NULL, '2022-09-07 04:44:38', '2022-09-07 04:44:38', 1),
+(15, 'Ga Ngotak', 'full', 2, '2022-09-21', '13.00-18.00', 13000000, NULL, NULL, NULL, NULL, '2022-09-16 09:02:05', '2022-09-21 05:44:48', 1),
+(51, 'jllloini', 'tour', NULL, '2022-09-21', 'bkjkb', 10000000, NULL, 'kjbkb', 'bjbjb', NULL, '2022-09-21 03:40:04', '2022-09-21 03:40:04', 1),
+(52, 'Ga Ngotak', 'tour', 1, '2022-09-21', '07.00-12.00', 10000000, NULL, 'vsfsf', 'gsgsggs', NULL, '2022-09-21 04:03:34', '2022-09-21 05:42:20', 1),
+(56, 'nlkcnafca', 'tour', NULL, '2022-09-21', 'lnkadc', 100000000, NULL, 'dada,ld', 'dmamdad', NULL, '2022-09-21 04:31:50', '2022-09-21 04:31:50', 1),
+(58, 'Jalan-jalan', 'tour', NULL, '2022-09-25', 'nlknlk', 100000000, NULL, 'cafafa', 'fafafafffa', NULL, '2022-09-25 06:01:42', '2022-09-25 06:01:42', 1),
+(62, 'Coba4', 'tour', NULL, '2022-10-17', '17.00-20.00', 1000000, NULL, NULL, NULL, NULL, '2022-10-04 18:08:47', '2022-10-17 12:36:17', 1),
+(67, 'coba6', 'tour', 1, '2022-10-05', 'dandnand', 10000000, NULL, 'dan,dnand', 'damldkad', NULL, '2022-10-05 05:01:54', '2022-10-05 05:01:54', 1),
+(68, 'Keliling Sampai Tepar', 'full', NULL, '2022-10-06', '18.00', 10000000, NULL, 'Keliling Bali sampai Tepar', 'Harus kaya', NULL, '2022-10-06 00:22:47', '2022-10-06 00:22:47', 1),
+(69, 'Pantai Pendawa', 'full', NULL, '2022-10-06', 'dqdad', 1000000, NULL, 'adadadad', 'dadadada', NULL, '2022-10-06 00:31:06', '2022-10-06 00:31:06', 1),
+(70, 'Pantai Kuta', 'full', 1, '2022-10-06', 'dqdqd', 1000000, NULL, 'dadada', 'adadada', NULL, '2022-10-06 00:31:34', '2022-10-06 00:31:34', 1),
+(71, 'Nusa Penida', 'full', 1, '2022-10-06', 'fffqfq', 3000000, NULL, 'ddqdq', 'dadadad', NULL, '2022-10-06 00:32:08', '2022-10-06 00:32:08', 1),
+(72, 'coba7', 'tour', NULL, '2022-10-07', 'dadadada', 1000000, NULL, 'dadadad', 'adadadqdq', NULL, '2022-10-06 18:42:21', '2022-10-06 18:42:21', 1),
+(74, 'coba', 'tour', NULL, '2022-10-17', '11.00-19.00', 1000000000, NULL, NULL, NULL, NULL, '2022-10-17 12:32:42', '2022-10-17 12:32:42', 1),
+(75, 'Keliling Bali 3', 'full', 1, '2022-10-23', '18.00-22.00', 10000000, NULL, 'daj,nda', 'jdlajdal', NULL, '2022-10-23 04:33:39', '2022-10-23 04:33:39', 1),
+(76, 'Keliling Bali 4', 'tour', NULL, '2022-10-23', 'Senin  - Rabu', 3000000, NULL, 'dnankda,d', 'dakndaknd', NULL, '2022-10-23 04:36:46', '2022-10-23 04:36:46', 1),
+(77, 'Bali Jegeg', 'full', NULL, '2022-11-13', '17.00-20.00', 2000000, 1000000, 'dadada', 'adadaadad', NULL, '2022-10-28 21:36:44', '2022-11-13 06:45:06', 1),
+(78, 'Bali Moi', 'optional', NULL, '2022-10-29', 'dadada', 100000, NULL, 'dadad', 'dadadad', NULL, '2022-10-28 21:39:46', '2022-10-28 21:39:46', 1),
+(87, 'Bali Indah', 'tour', NULL, '2022-10-29', 'ffsfsf', 1000000, NULL, 'fsfffsfs', 'adadafaff', NULL, '2022-10-28 22:03:48', '2022-10-28 22:03:48', 1),
+(88, 'Bali', 'tour', NULL, '2022-10-29', 'qeqeq', 1000000, NULL, NULL, NULL, NULL, '2022-10-28 22:12:42', '2022-10-28 22:43:28', 1),
+(89, 'Bali Bersatu', 'tour', NULL, '2022-11-16', 'dadad', 200000, 80000, 'sefsfsf', NULL, NULL, '2022-10-28 22:17:45', '2022-11-15 19:52:09', 1),
+(90, 'Bali Aneh', 'tour', NULL, '2022-10-29', 'cacal c a', 10000000, NULL, NULL, NULL, NULL, '2022-10-28 22:59:00', '2022-10-28 23:01:14', 1),
+(91, 'Keliling Bali 5', 'optional', 1, '2022-10-30', '17.00-22.00', 1000000, NULL, 'fsfsfsfs', 'fafafafaf', NULL, '2022-10-30 04:24:13', '2022-10-30 04:24:13', 1),
+(92, 'Keliling Bali 6', 'optional', 2, '2022-10-30', 'dadada', 1000000, 800000, NULL, NULL, NULL, '2022-10-30 04:28:31', '2022-10-30 04:36:27', 1),
+(93, 'Keliling Bali 7', 'optional', 2, '2022-10-30', 'adafaf', 1000000, 700000, 'fafafaf', 'afaffafaf', NULL, '2022-10-30 04:30:45', '2022-10-30 04:30:45', 1),
+(94, 'Eka Surya', 'tour', NULL, '2022-11-13', 'da;dlamd', 900000, NULL, 'fafafa', 'fafafafa', NULL, '2022-11-13 07:06:31', '2022-11-13 07:06:31', 1),
+(95, 'Eka Ganteng', 'tour', NULL, '2022-11-13', 'fafafa', 8000000, NULL, 'bjkbjkb', NULL, NULL, '2022-11-13 07:08:46', '2022-11-13 07:08:46', 1),
+(96, 'Steven Kusuma', 'tour', 3, '2022-11-13', 'huiiu', 900000, 100000, 'byuggby', 'buybuyb', NULL, '2022-11-13 07:15:28', '2022-11-13 07:15:28', 1),
+(97, 'Coba-coba', 'tour', NULL, '2022-11-13', 'calca c', 100000, 800000, 'ca kcacakc', 'cankcnakc', NULL, '2022-11-13 07:21:19', '2022-11-13 07:21:19', 1),
+(98, 'Coba Paket', 'optional', NULL, '2022-11-16', 'mca;lmda', 1000000, 0, 'ndkajdnakjd', 'da;kdad', 'package/lEpxqPu3KVRIgtePuIBda5pwZlmaGBOiLeOHhj2J.jpg', '2022-11-16 13:31:58', '2022-11-16 13:31:58', 1);
 
 -- --------------------------------------------------------
 
@@ -8570,7 +8574,8 @@ INSERT INTO `rest_packs` (`id`, `restaurant_id`, `package_id`, `day_id`, `create
 (117, 1, 91, 0, '2022-10-30 04:24:13', '2022-10-30 04:24:13'),
 (119, 2, 93, 0, '2022-10-30 04:30:45', '2022-10-30 04:30:45'),
 (120, 2, 92, 0, '2022-10-30 04:36:27', '2022-10-30 04:36:27'),
-(121, 2, 89, 1, '2022-10-30 04:37:37', '2022-10-30 04:37:37');
+(121, 2, 89, 1, '2022-10-30 04:37:37', '2022-10-30 04:37:37'),
+(122, 1, 98, 0, '2022-11-16 13:31:59', '2022-11-16 13:31:59');
 
 -- --------------------------------------------------------
 
@@ -83867,7 +83872,7 @@ ALTER TABLE `villages`
 -- AUTO_INCREMENT untuk tabel `cars`
 --
 ALTER TABLE `cars`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT untuk tabel `car_orders`
@@ -83891,7 +83896,7 @@ ALTER TABLE `destinations`
 -- AUTO_INCREMENT untuk tabel `dest_packs`
 --
 ALTER TABLE `dest_packs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=335;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=336;
 
 --
 -- AUTO_INCREMENT untuk tabel `disable_dates`
@@ -83939,7 +83944,7 @@ ALTER TABLE `orders`
 -- AUTO_INCREMENT untuk tabel `packages`
 --
 ALTER TABLE `packages`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=98;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=99;
 
 --
 -- AUTO_INCREMENT untuk tabel `personal_access_tokens`
@@ -83957,7 +83962,7 @@ ALTER TABLE `restaurants`
 -- AUTO_INCREMENT untuk tabel `rest_packs`
 --
 ALTER TABLE `rest_packs`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=122;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=123;
 
 --
 -- AUTO_INCREMENT untuk tabel `tickets`
