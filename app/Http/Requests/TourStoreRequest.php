@@ -35,7 +35,7 @@ class TourStoreRequest extends FormRequest
             'hotel4' => ['string', 'max:255'],
             'schedule' => ['required','string', 'max:255'],
             'price' => ['required', 'integer'],
-            'special_price' => ['integer'],
+            'special_price' => ['integer', 'nullable'],
             'description' => [],
             'keterangan' => [],
             'image' => ['image'],

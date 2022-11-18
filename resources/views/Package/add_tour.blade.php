@@ -271,16 +271,33 @@
 <script>
 
   $(document).ready(function(){
+    var uploadfile = null;
+    $('#image').change(function(){
+      uploadfile = this.files[0];
+    })
+    
     $('#form-package-tour').submit(function(e){
       e.preventDefault();
 
-      formData = $(this).serializeArray();
+      var form_data = $(this).serializeArray();
+
+      var formData = new FormData();
+      for ( i=0;i<form_data.length;i++) {
+          formData.append(form_data[i]['name'], form_data[i]['value']);
+      }
+
+      if(uploadfile){
+        formData.append("image", uploadfile);
+      }
+
       let method = $(this).attr('method');
       let action = $(this).attr('action');
       $.ajax({
         method: method,
         url: action,
         data: formData,
+        processData : false,
+        contentType : false,
         success: function(data){
           $('#error-alert').hide();
 
