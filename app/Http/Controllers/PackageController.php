@@ -153,7 +153,7 @@ class PackageController extends Controller
             if (!array_key_exists("description",$data)) $data['description'] ="";
             if (!array_key_exists("special_price",$data)) $data['special_price'] =0;
 
-            if (!array_key_exists("image",$data)) {
+            if (array_key_exists("image",$data)) {
                 $image_path = request('image')->store('package', 'public');
                 $image = Image::make(public_path("storage/{$image_path}"))->fit(1200, 1200);
                 $image->save();
@@ -169,7 +169,7 @@ class PackageController extends Controller
                 'special_price' => $data['special_price'],
                 'description' => $data['description'],
                 'keterangan' => $data['keterangan'],
-                'image' => $image_path,
+                'image' => $image_path ?? null,
             ]);
 
             foreach($hotels as $hotel)
@@ -208,11 +208,11 @@ class PackageController extends Controller
     }
 
     public function update_tour(Package $package, TourStoreRequest $request)
-    {
+    {     
         try{
             DB::beginTransaction();
             $data = $request->all();
-            // dd($request);
+
             $hotels = array();
             if (array_key_exists("hotel1",$data)) array_push($hotels,$data['hotel1']);
             if (array_key_exists("hotel2",$data)) array_push($hotels,$data['hotel2']);
@@ -223,11 +223,13 @@ class PackageController extends Controller
             if (!array_key_exists("description",$data)) $data['description'] ="";
             if (!array_key_exists("special_price",$data)) $data['special_price'] =0;
             // if (!array_key_exists("special_price",$data)) $data['description'] ="";
-
-            if (!array_key_exists("image",$data)) {
+            if (array_key_exists('image', $data)) {
                 $image_path = request('image')->store('package', 'public');
                 $image = Image::make(public_path("storage/{$image_path}"))->fit(1200, 1200);
                 $image->save();
+            }
+            else{
+                $image_path = $package->image;
             }
 
             $package->update([
@@ -253,7 +255,7 @@ class PackageController extends Controller
                     'hotel_id' => $hotel,
                 ]);
             }
-    
+
             foreach ($data['day'] as $key => $value) {
                 foreach ($data['destination'][$key] as $index => $dest) {
                     $package->dest_packs()->create([
@@ -349,7 +351,13 @@ class PackageController extends Controller
         if($package->type != 'tour'){
             return view('Package.edit',compact('destination', 'restaurant', 'ticket','package','ticket_code','destinations','restaurants'));
         } else {
-            return view('Package.edit_tour',compact('destination', 'restaurant', 'ticket','package','ticket_code','destinations','restaurants','hotels','hotel'));
+            $day_dest = $package->dest_packs->pluck('day_id')->toArray();
+            $day_rest = $package->rest_packs->pluck('day_id')->toArray();
+
+            $days = array_unique(array_merge($day_dest, $day_rest));
+            $destinations = Destination::all();
+            $restaurants = Restaurant::all();
+            return view('Package.edit_tour',compact('destination', 'restaurant', 'ticket','package','ticket_code','destinations','restaurants','hotels','hotel', 'days'));
         }
         
     }

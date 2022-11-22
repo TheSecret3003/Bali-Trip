@@ -27,7 +27,10 @@
               <div class="card-header bg-primary">
                 <div class="d-flex">
                   <h3 class="card-title">Data Paket</h3>
-                  <button class="btn btn-primary ml-auto" id="add_day" onclick="cloneDay(event)">Tambah hari</button>
+                  <div class="ml-auto">
+                    <button class="btn btn-primary" id="add_day" onclick="cloneDay(event)">Tambah hari</button>
+                    <button class="btn btn-danger mr-3" id="delete" onclick="deleteDay(event)">Hapus hari</button>
+                  </div>
                 </div>
               </div>
               <div class="card-body">
@@ -35,6 +38,11 @@
                 <li class="nav-item">
                   <a class="nav-link active" href="#package" role="tab" data-toggle="tab">Paket</a>
                 </li>
+                @foreach($days as $day)
+                <li class="nav-item">
+                  <a class="nav-link" id="day_tab_{{$day}}" href="#day_{{$day}}" role="tab" data-toggle="tab">Hari - {{$day}}</a>
+                </li>
+                @endforeach
               </ul>
               <div class="tab-content" id="tab_content">
                 <div role="tabpanel" class="tab-pane active" aria-selected="true" id="package">
@@ -248,6 +256,93 @@
                       <span ><sup>(*)</sup>Wajib diisi</span>
                     </div>
                 </div>
+                @php
+                  $dest_number = 1;
+                  $rest_number = 1;
+                  $index = 0;
+                @endphp
+                @foreach($days as $day)
+                <div role="tabpanel" class="tab-pane day" id="day_{{$day}}">
+                  <input type="hidden" name="day[]" value="{{$day}}">
+                  <div class="row mt-4">
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="d-flex">
+                            <h4>Destinasi</h4>
+                            <button class="btn btn-primary ml-auto" data-id="{{$day}}" data-index="{{$index}}" onclick="cloneDestination(event)">+</button>
+                          </div> 
+                        </div>
+                      </div>
+                      <div class="destination" id="destination_parent_{{$day}}">
+                        @foreach($package->dest_packs->where('day_id', $day) as $dest_pack)
+                        
+                        <div class="row mt-2 destination-row">
+                          <div class="col-md-10">
+                            <select id="destination_{{$dest_number}}" class="form-control destination-item select2" name="destination[{{$index}}][]">
+                              @foreach($destinations as $ds)
+                                @if($ds->id == $dest_pack->destination_id)
+                                <option value="{{$ds->id}}" selected>{{$ds->name}}</option>
+                                @else
+                                <option value="{{$ds->id}}">{{$ds->name}}</option>
+                                @endif
+                              @endforeach
+                            </select>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="col-1">
+                                <button onclick="$(this).closest('.destination-row').remove();" class="btn btn-danger" style="display: block"><i class="fa fa-trash"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                        @php
+                          $dest_number++;
+                        @endphp
+                        @endforeach
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="row">
+                        <div class="col-md-12">
+                          <div class="d-flex">
+                            <h4>Restaurant</h4>
+                            <button class="btn btn-primary ml-auto" data-id="{{$day}}" data-index="{{$index}}" onclick="cloneRestaurant(event)">+</button>
+                          </div>        
+                        </div>       
+                      </div>
+                      <div class="restaurant" id="restaurant_parent_{{$day}}">
+                        @foreach($package->rest_packs->where('day_id', $day) as $rest_pack)
+                        
+                        <div class="row mt-2 restaurant-row">
+                          <div class="col-md-10">
+                            <select id="restaurant_{{$rest_number}}" class="form-control restaurant-item select2" name="restaurant[{{$index}}][]">
+                              @foreach($restaurants as $rs)
+                                @if($rs->id == $rest_pack->restaurant_id)
+                                <option value="{{$rs->id}}" selected>{{$rs->name}}</option>
+                                @else
+                                <option value="{{$rs->id}}">{{$rs->name}}</option>
+                                @endif
+                              @endforeach
+                            </select>
+                          </div>
+                          <div class="col-md-2">
+                            <div class="col-1">
+                                <button onclick="$(this).closest('.restaurant-row').remove();" class="btn btn-danger" style="display: block"><i class="fa fa-trash"></i></button>
+                            </div>
+                          </div>
+                        </div>
+                        @php
+                          $rest_number++;
+                        @endphp
+                        @endforeach
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                @php
+                  $index ++;
+                @endphp
+                @endforeach
               </div>
               <div class="card-footer" style="display: flex">
                 <submit-button message="Simpan"></submit-button>
@@ -267,16 +362,43 @@
 <script>
 
   $(document).ready(function(){
+    var uploadfile = null;
+
+    $('.destination-item').select2({
+        placeholder: 'Pilih destinasi',
+        width: '100%'
+    });
+    $('.restaurant-item').select2({
+        placeholder: 'Pilih destinasi',
+        width: '100%'
+    });
+
+    $('#image').change(function(){
+      uploadfile = this.files[0];
+    })
+
     $('#form-package-tour').submit(function(e){
       e.preventDefault();
 
-      formData = $(this).serializeArray();
+      var form_data = $(this).serializeArray();
+
+      var formData = new FormData();
+      for ( i=0;i<form_data.length;i++) {
+          formData.append(form_data[i]['name'], form_data[i]['value']);
+      }
+
+      if(uploadfile){
+        formData.append("image", uploadfile);
+      }
+
       let method = $(this).attr('method');
       let action = $(this).attr('action');
       $.ajax({
         method: method,
         url: action,
         data: formData,
+        processData : false,
+        contentType : false,
         success: function(data){
           $('#error-alert').hide();
 
@@ -308,13 +430,21 @@
     })
   });
 
+  function deleteDay(e){
+    e.preventDefault();
+    let number = $('.day').length;
+    console.log(number);
+    $(`.tab-pane#day_${number}`).remove();
+    $(`.nav-link#day_tab_${number}`).closest('li').remove();
+  }
+
   function cloneDay(e){
     e.preventDefault();
     let index = $('.day').length;
     let number = index + 1;
     let tab = `
       <li class="nav-item">
-        <a class="nav-link" href="#day_${number}" role="tab" data-toggle="tab">Hari ${number}</a>
+        <a class="nav-link" id="day_tab_${number}" href="#day_${number}" role="tab" data-toggle="tab">Hari ${number}</a>
       </li>
     `;
     let content = `
@@ -416,7 +546,7 @@
     let id = target.attr('data-id');
     let index = target.attr('data-index');
     let number = $('.restaurant-item').length + 1;
-
+    console.log(index);
     let option = '';
 
     let content = `
